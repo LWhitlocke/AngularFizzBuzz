@@ -9,16 +9,18 @@ import { FizzBangRule } from 'app/models/fizzBangRule'
 })
 export class DashboardComponent implements OnInit {
 
-  fizzBangResults: FizzBang[];
   fizzBangFloor: number;
   fizzBangCeiling: number;
+  fizzBangStep: number;
   fizzBangRules: FizzBangRule[];
+  fizzBangResults: FizzBang[];
 
   constructor() { }
 
   ngOnInit() {
       this.fizzBangFloor = 1;
       this.fizzBangCeiling = 100;
+      this.fizzBangStep = 1;
 
       this.fizzBangRules = [
         {displayResult: 'Fizz', operator: '%', value: 3, operationResult: 0},
@@ -33,7 +35,7 @@ export class DashboardComponent implements OnInit {
 
 
   calculateFizzBang() {
-    for (let i = this.fizzBangFloor; i <= this.fizzBangCeiling; i++) {
+    for (let i = this.fizzBangFloor; i <= this.fizzBangCeiling; i = i + this.fizzBangStep) {
       let displayValue = '';
       this.fizzBangRules.forEach(rule => {
         if (this.evaluateParameters(i, rule) === true) {

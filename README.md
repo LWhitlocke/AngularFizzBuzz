@@ -1,35 +1,22 @@
-# AngularFizzBuzz
+# Angular FizzBuzz
 Angular 8 FizzBuzz website built using the Material Dashboard Angular theme.
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+After cloning the repo be sure to run npm i to get all the relevant packages
 
-```
-Give examples
-```
+## Getting Started
 
-### Installing
+You can serve the solution with ng serve and you can access the site by browsing to http://localhost:4200. 
+Once the site is open you will be presented with the dashboard page with the core fizzbuzz functionality.
 
-A step by step series of examples that tell you how to get a development env running
+Currently you can only change the rules by altering the dashboard component directly. If you open src>app>dashboard>dashboard.component.ts you will find the fizzBangRules initalised during the ngOnInit event
 
-Say what the step will be
+## ToDo
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+- Create FizzBuzz service to store logic
+- Allow alteration of rule set via UI
+- Decide what to do with Table List page
 
 ## Running the tests
 
@@ -53,4 +40,4 @@ Give an example
 
 ## Authors
 
-* **Lee Whitlocke** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Lee Whitlocke** - *Initial work* - Theme taken from https://demos.creative-tim.com/material-dashboard/examples/dashboard.html
