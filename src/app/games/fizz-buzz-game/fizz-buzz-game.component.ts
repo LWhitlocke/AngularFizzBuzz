@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FizzBangRule } from 'app/models/fizzBangRule';
 import { FizzBang } from 'app/models/fizzBang';
 import { FizzBuzzService } from 'app/services/fizz-buzz.service';
-import { NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-fizz-buzz-game',
@@ -24,6 +24,10 @@ export class FizzBuzzGameComponent implements OnInit {
   showNewRuleForm = false;
   fizzBuzzService: FizzBuzzService;
 
+  floorEditMode: boolean;
+  ceilingEditMode: boolean;
+  stepperEditMode: boolean;
+
   constructor(service: FizzBuzzService, private spinner: NgxSpinnerService) {
     this.fizzBuzzService = service;
    }
@@ -34,6 +38,9 @@ export class FizzBuzzGameComponent implements OnInit {
     this.fizzBangFloor = 1;
     this.fizzBangCeiling = 100;
     this.fizzBangStep = 1;
+    this.floorEditMode = false;
+    this.ceilingEditMode = false;
+    this.stepperEditMode = false;
 
     this.spinner.show();
 
@@ -57,12 +64,9 @@ export class FizzBuzzGameComponent implements OnInit {
   }
 
   calculateFizzBang() {
+    this.spinner.show();
     this.fizzBangResults = [];
-    for (
-      let i = this.fizzBangFloor;
-      i <= this.fizzBangCeiling;
-      i = i + this.fizzBangStep
-    ) {
+    for (let i = this.fizzBangFloor; i <= this.fizzBangCeiling; i = i + this.fizzBangStep) {
       let displayValue = '';
       this.fizzBangRules.forEach(rule => {
         if (this.evaluateParameters(i, rule) === true) {
@@ -82,6 +86,7 @@ export class FizzBuzzGameComponent implements OnInit {
       this.fizzBangResults.push(fizzBangResult);
     }
     this.fizzBangResultsEmitter.emit(this.fizzBangResults);
+    this.spinner.hide();
   }
 
   evaluateParameters(parameter1: number, fizzBangRule: FizzBangRule) {
@@ -117,4 +122,33 @@ export class FizzBuzzGameComponent implements OnInit {
     this.newFizzBangRule = {};
     this.showNewRuleForm = !this.showNewRuleForm;
   }
+
+  // Below 6 methods could probably be refactored into two
+  toggleFloorEditMode() {
+    this.floorEditMode = !this.floorEditMode;
+  }
+
+  toggleCeilingEditMode() {
+    this.ceilingEditMode = !this.ceilingEditMode;
+  }
+
+  toggleStepperEditMode() {
+    this.stepperEditMode = !this.stepperEditMode;
+  }
+
+  saveFloorEditChanges() {
+    this.calculateFizzBang();
+    this.floorEditMode = !this.floorEditMode;
+  }
+
+  saveCeilingEditChanges() {
+    this.calculateFizzBang();
+    this.ceilingEditMode = !this.ceilingEditMode;
+  }
+
+  saveStepperEditChanges() {
+    this.calculateFizzBang();
+    this.stepperEditMode = !this.stepperEditMode;
+  }
+  // Consider refactoring the above into two methods
 }

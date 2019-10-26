@@ -1,42 +1,45 @@
 <ngx-spinner></ngx-spinner>
  <!--FizzBang base configuration-->
  <div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleFloorEditMode()">
       <div class="card card-stats">
         <div class="card-header card-header-warning card-header-icon">
           <div class="card-icon">
             <i class="material-icons">content_copy</i>
           </div>
-          <p class="card-category">X Value</p>
-          <h3 class="card-title">
+          <p class="card-category">Floor Value</p>
+          <h3 class="card-title" *ngIf="!floorEditMode">
             {{ fizzBangFloor }}
           </h3>
+          <input class="form-control" type="number" *ngIf="floorEditMode" [(ngModel)]="fizzBangFloor" (blur)="saveFloorEditChanges()" [value]="fizzBangFloor">
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleCeilingEditMode()">
       <div class="card card-stats">
         <div class="card-header card-header-warning card-header-icon">
           <div class="card-icon">
             <i class="material-icons">store</i>
           </div>
-          <p class="card-category">Y Value</p>
-          <h3 class="card-title">
+          <p class="card-category">Ceiling Value</p>
+          <h3 class="card-title" *ngIf="!ceilingEditMode">
             {{ fizzBangCeiling }}
           </h3>
+          <input class="form-control" type="number" *ngIf="ceilingEditMode" [(ngModel)]="fizzBangCeiling" (blur)="saveCeilingEditChanges()" [value]="fizzBangCeiling">
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleStepperEditMode()">
       <div class="card card-stats">
         <div class="card-header card-header-warning card-header-icon">
           <div class="card-icon">
             <i class="material-icons">exposure_plus_1</i>
           </div>
           <p class="card-category">Stepper increment</p>
-          <h3 class="card-title">
+          <h3 class="card-title" *ngIf="!stepperEditMode">
             {{ fizzBangStep }}
           </h3>
+          <input class="form-control" type="number" *ngIf="stepperEditMode" [(ngModel)]="fizzBangStep" (blur)="saveStepperEditChanges()" [value]="fizzBangStep">
         </div>
       </div>
     </div>
