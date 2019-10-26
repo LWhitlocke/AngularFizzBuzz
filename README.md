@@ -10,7 +10,9 @@ After cloning the repo be sure to run npm i to get all the relevant packages
 You can serve the solution with ng serve and you can access the site by browsing to http://localhost:4200. 
 Once the site is open you will be presented with the dashboard page with the core fizzbuzz functionality.
 
-Currently you can only change the rules by altering the dashboard component directly. If you open src>app>dashboard>dashboard.component.ts you will find the fizzBangRules initalised during the ngOnInit event
+Currently you can only change the rules by altering the dashboard component directly. If you open src>app>dashboard>dashboard.component.ts you will find the fizzBangRules initalised during the ngOnInit event.
+
+Optionally, you can also get the sibling project https://github.com/LWhitlocke/AngularFizzBuzz.Api for a live API example. This is not required and the app will utilise a local datasource if the http call fails.
 
 ## ToDo
 
@@ -39,6 +41,11 @@ Explain what these tests test and why
 Give an example
 ```
 
+## Acknowledgments
+
+Theme taken from https://demos.creative-tim.com/material-dashboard/examples/dashboard.html
+NgxSpinner - https://www.npmjs.com/package/ngx-spinner
+
 ## Authors
 
-* **Lee Whitlocke** - *Initial work* - Theme taken from https://demos.creative-tim.com/material-dashboard/examples/dashboard.html
+* **Lee Whitlocke** - *Initial work* - 

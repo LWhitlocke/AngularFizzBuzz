@@ -1,11 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FizzBangRule } from 'app/models/fizzBangRule';
 import { FizzBang } from 'app/models/fizzBang';
+import { FizzBuzzService } from 'app/services/fizz-buzz.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-fizz-buzz-game',
   templateUrl: './fizz-buzz-game.component.html',
-  styleUrls: ['./fizz-buzz-game.component.scss']
+  styleUrls: ['./fizz-buzz-game.component.scss'],
+  providers: [ FizzBuzzService ]
 })
 export class FizzBuzzGameComponent implements OnInit {
   @Output() fizzBangResultsEmitter: EventEmitter<FizzBang[]> = new EventEmitter<FizzBang[]>();
@@ -15,12 +18,15 @@ export class FizzBuzzGameComponent implements OnInit {
   fizzBangStep: number;
   fizzBangRules: FizzBangRule[];
   fizzBangResults: FizzBang[];
-  
+
   newFizzBangRule: any;
   availableOperators: string[];
   showNewRuleForm = false;
+  fizzBuzzService: FizzBuzzService;
 
-  constructor() {}
+  constructor(service: FizzBuzzService, private spinner: NgxSpinnerService) {
+    this.fizzBuzzService = service;
+   }
 
   ngOnInit() {
     this.newFizzBangRule = {};
@@ -29,15 +35,25 @@ export class FizzBuzzGameComponent implements OnInit {
     this.fizzBangCeiling = 100;
     this.fizzBangStep = 1;
 
-    this.fizzBangRules = [
-      { displayResult: 'Fizz', operator: '%', value: 3, operationResult: 0 },
-      { displayResult: 'Bang', operator: '%', value: 5, operationResult: 0 },
-      { displayResult: 'Boom', operator: '>', value: 50 }
-    ];
+    this.spinner.show();
+
+    this.fizzBuzzService.getFizzBangRules().subscribe(
+            data => { this.fizzBangRules = data},
+            err => {
+              console.error(err);
+              this.fizzBangRules = [
+                { displayResult: 'Fizz', operator: '%', value: 3, operationResult: 0 },
+                { displayResult: 'Bang', operator: '%', value: 5, operationResult: 0 }
+              ];
+            })
+            .add(() => {
+              console.log('done loading fizzBangRules');
+              this.calculateFizzBang();
+              this.spinner.hide();
+            }
+          );
 
     this.fizzBangResults = [];
-
-    this.calculateFizzBang();
   }
 
   calculateFizzBang() {
