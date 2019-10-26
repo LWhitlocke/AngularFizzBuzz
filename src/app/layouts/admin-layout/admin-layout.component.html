@@ -17,9 +17,12 @@
     <!--Main content-->
     <div class="main-content">
       <div class="container-fluid">
-        <app-fizz-buzz-game (fizzBangResultsEmitter)='handleResults($event)'></app-fizz-buzz-game>
+        <button class="btn btn-success" (click)="toggleFizzBuzz()" *ngIf="!showFizzBuzz">Play FizzBuzz</button>
+        <button class="btn btn-warning" (click)="toggleFizzBuzzTwo()" *ngIf="!showFizzBuzzTwo">Play Other game</button>
+
+        <app-fizz-buzz-game (fizzBangResultsEmitter)='handleResults($event)' *ngIf="showFizzBuzz"></app-fizz-buzz-game>
         <!--Results Table-->
-        <div class="row">
+        <div class="row" *ngIf="showTable">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header card-header-danger">

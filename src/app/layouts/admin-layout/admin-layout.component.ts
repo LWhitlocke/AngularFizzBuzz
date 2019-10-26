@@ -13,14 +13,38 @@ export class AdminLayoutComponent implements OnInit {
   gameResults: FizzBang[];
   gameName: string;
 
+  showFizzBuzz: boolean;
+  showFizzBuzzTwo: boolean;
+  showTable: boolean;
+
   constructor(public location: Location, private router: Router) {}
 
   ngOnInit() {
       this.gameName = 'FizzBang'
       this.gameResults = [];
+      this.showFizzBuzz = false;
+      this.showFizzBuzzTwo = false;
+      this.showTable = false;
   }
 
   handleResults($event) {
       this.gameResults = $event;
   }
+
+  toggleFizzBuzz() {
+    this.gameName = 'FizzBang'
+    this.gameResults = [];
+    this.showFizzBuzz = true;
+    this.showFizzBuzzTwo = false;
+    this.showTable = true;
+  }
+
+  toggleFizzBuzzTwo() {
+    this.gameName = 'Other Game'
+    this.gameResults = [];
+    this.showFizzBuzz = false;
+    this.showFizzBuzzTwo = true;
+    this.showTable = true;
+  }
+
 }
