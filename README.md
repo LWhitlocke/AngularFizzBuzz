@@ -14,8 +14,9 @@ Currently you can only change the rules by altering the dashboard component dire
 
 ## ToDo
 
-- Create FizzBuzz service to store logic
-- Allow alteration of rule set via UI
+- ~~Create FizzBuzz component to store logic~~
+- ~~Allow alteration of rule set via UI~~
+- Allow alteration of core game config via UI
 - Add ability to re-order rules
 
 ## Running the tests
