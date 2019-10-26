@@ -83,72 +83,105 @@
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="showNewRuleForm">
-        <div class="card card-stats form-group">
-          <div class="card-header card-header-danger card-header-icon">
-            <div class="card-icon pointer" (click)="closeNewRuleForm()">
-              <i class="material-icons">close</i>
-            </div>
-            <p class="card-category" style="margin-bottom:20px;">
-              New Game Rule
-            </p>
-            <div>
-              <label for="operator">Operator:</label>
-              <select
-                required
-                id="operator"
-                [(ngModel)]="newFizzBangRule.operator"
-                class="custom-select"
-              >
-                <option
-                  *ngFor="let operator of availableOperators"
-                  [value]="operator"
-                  >{{ operator }}</option
-                >
-              </select>
-            </div>
-            <div>
-              <label for="value">Value:</label>
-              <input
-                required
-                id="value"
-                type="number"
-                class="form-control"
-                [(ngModel)]="newFizzBangRule.value"
-              />
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <label for="displayResult">Display result</label>
-              <input
-                required
-                id="displayResult"
-                type="text"
-                class="form-control"
-                [(ngModel)]="newFizzBangRule.displayResult"
-              />
-            </div>
-            <div class="stats" *ngIf="newFizzBangRule.operator == '%'" style="padding-right: 10px; padding-left: 10px;">
-                <label for="operationResult">Operation result</label>
-                <input
+        <form
+          (ngSubmit)="f.form.valid && save(newFizzBangRule)"
+          #f="ngForm"
+          novalidate
+        >
+          <div class="card card-stats form-group">
+            <div class="card-header card-header-danger card-header-icon">
+              <div class="card-icon pointer" (click)="closeNewRuleForm()">
+                <i class="material-icons">close</i>
+              </div>
+              <p class="card-category" style="margin-bottom:20px;">
+                New Game Rule
+              </p>
+              <div>
+                <label>Operator:</label>
+                <select
+                  name="operator"
+                  [(ngModel)]="newFizzBangRule.operator"
+                  #operator="ngModel"
+                  class="custom-select"
+                  [ngClass]="{ 'is-invalid': f.submitted && operator.invalid }"
                   required
-                  id="operationResult"
+                >
+                  <option
+                    *ngFor="let availableOperator of availableOperators"
+                    [value]="availableOperator"
+                    >{{ availableOperator }}</option
+                  >
+                </select>
+                <div
+                  *ngIf="f.submitted && operator.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="operator?.errors.required">
+                    Operator is required
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label>Value:</label>
+                <input
+                  name="value"
+                  [(ngModel)]="newFizzBangRule.value"
+                  #value="ngModel"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': f.submitted && value.invalid }"
+                  type="number"
+                  required
+                />
+                <div
+                  *ngIf="f.submitted && value.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="value?.errors.required">Value is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <label>Display result</label>
+                <input
+                  name="displayResult"
+                  [(ngModel)]="newFizzBangRule.displayResult"
+                  #displayResult="ngModel"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': f.submitted && displayResult.invalid }"
+                  type="text"
+                  required
+                />
+                <div
+                  *ngIf="f.submitted && displayResult.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="displayResult?.errors.required">
+                    Display result is required
+                  </div>
+                </div>
+              </div>
+              <div
+                class="stats"
+                *ngIf="newFizzBangRule.operator == '%'"
+                style="padding-right: 10px; padding-left: 10px;"
+              >
+                <label>Operation result</label>
+                <input
+                  name="operationResult"
                   type="number"
                   class="form-control"
                   [(ngModel)]="newFizzBangRule.operationResult"
                 />
               </div>
-            <div class="pull-right">
-              <button
-                class="btn btn-success"
-                value="Save rule"
-                (click)="save(newFizzBangRule)"
-              >
-                Save Rule
-              </button>
+              <div class="pull-right">
+                <button class="btn btn-success" value="Save rule">
+                  Save Rule
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <!--Results Table-->
