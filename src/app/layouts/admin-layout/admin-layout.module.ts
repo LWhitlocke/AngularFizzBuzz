@@ -3,8 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
-import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
 
 import {
   MatButtonModule,
@@ -27,10 +25,7 @@ import {
     MatSelectModule,
     MatTooltipModule,
   ],
-  declarations: [
-    DashboardComponent,
-    UserProfileComponent
-  ]
+  declarations: [  ]
 })
 
 export class AdminLayoutModule {}

@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FizzBang } from 'app/models/fizzBang';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FizzBangRule } from 'app/models/fizzBangRule';
+import { FizzBang } from 'app/models/fizzBang';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-fizz-buzz-game',
+  templateUrl: './fizz-buzz-game.component.html',
+  styleUrls: ['./fizz-buzz-game.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class FizzBuzzGameComponent implements OnInit {
+  @Output() fizzBangResultsEmitter: EventEmitter<FizzBang[]> = new EventEmitter<FizzBang[]>();
+
   fizzBangFloor: number;
   fizzBangCeiling: number;
   fizzBangStep: number;
   fizzBangRules: FizzBangRule[];
   fizzBangResults: FizzBang[];
-
+  
   newFizzBangRule: any;
   availableOperators: string[];
   showNewRuleForm = false;
@@ -63,6 +65,7 @@ export class DashboardComponent implements OnInit {
       };
       this.fizzBangResults.push(fizzBangResult);
     }
+    this.fizzBangResultsEmitter.emit(this.fizzBangResults);
   }
 
   evaluateParameters(parameter1: number, fizzBangRule: FizzBangRule) {
