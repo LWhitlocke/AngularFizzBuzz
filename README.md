@@ -16,7 +16,7 @@ Currently you can only change the rules by altering the dashboard component dire
 
 - Create FizzBuzz service to store logic
 - Allow alteration of rule set via UI
-- Decide what to do with Table List page
+- Add ability to re-order rules
 
 ## Running the tests
 

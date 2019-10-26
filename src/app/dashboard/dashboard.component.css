@@ -1,0 +1,23 @@
+.new-rule {
+    height: 154px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.new-rule:hover {
+    box-shadow: 5px 5px 5px 5px lightgrey;
+}
+
+.new-rule i {
+    color: lightgrey;
+    font-size: 48px;
+    margin: auto;
+}
+
+.new-rule:hover i {
+    color: grey;
+}
+
+.pointer {
+    cursor: pointer;
+}

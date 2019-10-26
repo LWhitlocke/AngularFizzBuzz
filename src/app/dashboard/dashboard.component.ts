@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FizzBang } from 'app/models/fizzBang';
-import { FizzBangRule } from 'app/models/fizzBangRule'
+import { FizzBangRule } from 'app/models/fizzBangRule';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,34 +8,43 @@ import { FizzBangRule } from 'app/models/fizzBangRule'
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
   fizzBangFloor: number;
   fizzBangCeiling: number;
   fizzBangStep: number;
   fizzBangRules: FizzBangRule[];
   fizzBangResults: FizzBang[];
 
-  constructor() { }
+  newFizzBangRule: any;
+  availableOperators: string[];
+  showNewRuleForm = false;
+
+  constructor() {}
 
   ngOnInit() {
-      this.fizzBangFloor = 1;
-      this.fizzBangCeiling = 100;
-      this.fizzBangStep = 1;
+    this.newFizzBangRule = {};
+    this.availableOperators = ['%', '>', '<'];
+    this.fizzBangFloor = 1;
+    this.fizzBangCeiling = 100;
+    this.fizzBangStep = 1;
 
-      this.fizzBangRules = [
-        {displayResult: 'Fizz', operator: '%', value: 3, operationResult: 0},
-        {displayResult: 'Bang', operator: '%', value: 5, operationResult: 0},
-        {displayResult: 'Boom', operator: '>', value: 50}
-      ];
+    this.fizzBangRules = [
+      { displayResult: 'Fizz', operator: '%', value: 3, operationResult: 0 },
+      { displayResult: 'Bang', operator: '%', value: 5, operationResult: 0 },
+      { displayResult: 'Boom', operator: '>', value: 50 }
+    ];
 
-      this.fizzBangResults = []
+    this.fizzBangResults = [];
 
-      this.calculateFizzBang();
+    this.calculateFizzBang();
   }
 
-
   calculateFizzBang() {
-    for (let i = this.fizzBangFloor; i <= this.fizzBangCeiling; i = i + this.fizzBangStep) {
+    this.fizzBangResults = [];
+    for (
+      let i = this.fizzBangFloor;
+      i <= this.fizzBangCeiling;
+      i = i + this.fizzBangStep
+    ) {
       let displayValue = '';
       this.fizzBangRules.forEach(rule => {
         if (this.evaluateParameters(i, rule) === true) {
@@ -43,7 +52,9 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-      if (displayValue === '') { displayValue = i.toString(); }
+      if (displayValue === '') {
+        displayValue = i.toString();
+      }
 
       let fizzBangResult: FizzBang;
       fizzBangResult = {
@@ -69,5 +80,22 @@ export class DashboardComponent implements OnInit {
         break;
       }
     }
+  }
+
+  delete(rule: FizzBangRule) {
+    this.fizzBangRules.splice(this.fizzBangRules.indexOf(rule), 1);
+    this.calculateFizzBang();
+  }
+
+  save(rule: FizzBangRule) {
+    this.fizzBangRules.push(rule);
+    this.newFizzBangRule = {};
+    this.calculateFizzBang();
+    this.showNewRuleForm = !this.showNewRuleForm;
+  }
+
+  closeNewRuleForm() {
+    this.newFizzBangRule = {};
+    this.showNewRuleForm = !this.showNewRuleForm;
   }
 }
