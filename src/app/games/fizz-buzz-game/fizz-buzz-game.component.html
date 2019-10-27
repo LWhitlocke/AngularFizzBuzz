@@ -1,7 +1,7 @@
 <ngx-spinner></ngx-spinner>
- <!--FizzBang base configuration-->
+ <!--FizzBuzz base configuration-->
  <div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleFloorEditMode()">
+    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleEditMode('floorEditMode')">
       <div class="card card-stats">
         <div class="card-header card-header-warning card-header-icon">
           <div class="card-icon">
@@ -9,13 +9,13 @@
           </div>
           <p class="card-category">Floor Value</p>
           <h3 class="card-title" *ngIf="!floorEditMode">
-            {{ fizzBangFloor }}
+            {{ fizzBuzzFloor }}
           </h3>
-          <input class="form-control" type="number" *ngIf="floorEditMode" [(ngModel)]="fizzBangFloor" (blur)="saveFloorEditChanges()" [value]="fizzBangFloor">
+          <input class="form-control" type="number" *ngIf="floorEditMode" [(ngModel)]="fizzBuzzFloor" (blur)="toggleEditMode('floorEditMode', true)" [value]="fizzBuzzFloor">
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleCeilingEditMode()">
+    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleEditMode('ceilingEditMode')">
       <div class="card card-stats">
         <div class="card-header card-header-warning card-header-icon">
           <div class="card-icon">
@@ -23,13 +23,13 @@
           </div>
           <p class="card-category">Ceiling Value</p>
           <h3 class="card-title" *ngIf="!ceilingEditMode">
-            {{ fizzBangCeiling }}
+            {{ fizzBuzzCeiling }}
           </h3>
-          <input class="form-control" type="number" *ngIf="ceilingEditMode" [(ngModel)]="fizzBangCeiling" (blur)="saveCeilingEditChanges()" [value]="fizzBangCeiling">
+          <input class="form-control" type="number" *ngIf="ceilingEditMode" [(ngModel)]="fizzBuzzCeiling" (blur)="toggleEditMode('ceilingEditMode', true)" [value]="fizzBuzzCeiling">
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleStepperEditMode()">
+    <div class="col-lg-3 col-md-6 col-sm-6 pointer" (dblclick)="toggleEditMode('stepperEditMode')">
       <div class="card card-stats">
         <div class="card-header card-header-warning card-header-icon">
           <div class="card-icon">
@@ -37,18 +37,18 @@
           </div>
           <p class="card-category">Stepper increment</p>
           <h3 class="card-title" *ngIf="!stepperEditMode">
-            {{ fizzBangStep }}
+            {{ fizzBuzzStep }}
           </h3>
-          <input class="form-control" type="number" *ngIf="stepperEditMode" [(ngModel)]="fizzBangStep" (blur)="saveStepperEditChanges()" [value]="fizzBangStep">
+          <input class="form-control" type="number" *ngIf="stepperEditMode" [(ngModel)]="fizzBuzzStep" (blur)="toggleEditMode('stepperEditMode', true)" [value]="fizzBuzzStep">
         </div>
       </div>
     </div>
   </div>
-  <!--FizzBang Dynamic rules-->
+  <!--FizzBuzz Dynamic rules-->
   <div class="row">
     <div
       class="col-lg-3 col-md-6 col-sm-6"
-      *ngFor="let rule of fizzBangRules"
+      *ngFor="let rule of fizzBuzzRules"
     >
       <div class="card card-stats">
         <div class="card-header card-header-warning card-header-icon">
@@ -86,7 +86,7 @@
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="showNewRuleForm">
       <form
-        (ngSubmit)="f.form.valid && save(newFizzBangRule)"
+        (ngSubmit)="f.form.valid && save(newFizzBuzzRule)"
         #f="ngForm"
         novalidate
       >
@@ -102,7 +102,7 @@
               <label>Operator:</label>
               <select
                 name="operator"
-                [(ngModel)]="newFizzBangRule.operator"
+                [(ngModel)]="newFizzBuzzRule.operator"
                 #operator="ngModel"
                 class="custom-select"
                 [ngClass]="{ 'is-invalid': f.submitted && operator.invalid }"
@@ -127,7 +127,7 @@
               <label>Value:</label>
               <input
                 name="value"
-                [(ngModel)]="newFizzBangRule.value"
+                [(ngModel)]="newFizzBuzzRule.value"
                 #value="ngModel"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': f.submitted && value.invalid }"
@@ -147,7 +147,7 @@
               <label>Display result</label>
               <input
                 name="displayResult"
-                [(ngModel)]="newFizzBangRule.displayResult"
+                [(ngModel)]="newFizzBuzzRule.displayResult"
                 #displayResult="ngModel"
                 class="form-control"
                 [ngClass]="{ 'is-invalid': f.submitted && displayResult.invalid }"
@@ -165,7 +165,7 @@
             </div>
             <div
               class="stats"
-              *ngIf="newFizzBangRule.operator == '%'"
+              *ngIf="newFizzBuzzRule.operator == '%'"
               style="padding-right: 10px; padding-left: 10px;"
             >
               <label>Operation result</label>
@@ -173,7 +173,7 @@
                 name="operationResult"
                 type="number"
                 class="form-control"
-                [(ngModel)]="newFizzBangRule.operationResult"
+                [(ngModel)]="newFizzBuzzRule.operationResult"
               />
             </div>
             <div class="pull-right">

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FizzBangRule } from 'app/models/fizzBangRule';
-import { FizzBang } from 'app/models/fizzBang';
+import { FizzBuzzRule } from 'app/models/fizzBuzzRule';
+import { FizzBuzz } from 'app/models/fizzBuzz';
 import { FizzBuzzService } from 'app/services/fizz-buzz.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -11,15 +11,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
   providers: [ FizzBuzzService ]
 })
 export class FizzBuzzGameComponent implements OnInit {
-  @Output() fizzBangResultsEmitter: EventEmitter<FizzBang[]> = new EventEmitter<FizzBang[]>();
+  @Output() fizzBuzzResultsEmitter: EventEmitter<FizzBuzz[]> = new EventEmitter<FizzBuzz[]>();
 
-  fizzBangFloor: number;
-  fizzBangCeiling: number;
-  fizzBangStep: number;
-  fizzBangRules: FizzBangRule[];
-  fizzBangResults: FizzBang[];
+  fizzBuzzFloor: number;
+  fizzBuzzCeiling: number;
+  fizzBuzzStep: number;
+  fizzBuzzRules: FizzBuzzRule[];
+  fizzBuzzResults: FizzBuzz[];
 
-  newFizzBangRule: any;
+  newFizzBuzzRule: any;
   availableOperators: string[];
   showNewRuleForm = false;
   fizzBuzzService: FizzBuzzService;
@@ -33,42 +33,42 @@ export class FizzBuzzGameComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.newFizzBangRule = {};
-    this.availableOperators = ['%', '>', '<'];
-    this.fizzBangFloor = 1;
-    this.fizzBangCeiling = 100;
-    this.fizzBangStep = 1;
+    this.newFizzBuzzRule = {};
+    this.availableOperators = ['%', '>', '<', '='];
+    this.fizzBuzzFloor = 1;
+    this.fizzBuzzCeiling = 100;
+    this.fizzBuzzStep = 1;
     this.floorEditMode = false;
     this.ceilingEditMode = false;
     this.stepperEditMode = false;
 
     this.spinner.show();
 
-    this.fizzBuzzService.getFizzBangRules().subscribe(
-            data => { this.fizzBangRules = data},
+    this.fizzBuzzService.getFizzBuzzRules().subscribe(
+            data => { this.fizzBuzzRules = data},
             err => {
               console.error(err);
-              this.fizzBangRules = [
+              this.fizzBuzzRules = [
                 { displayResult: 'Fizz', operator: '%', value: 3, operationResult: 0 },
-                { displayResult: 'Bang', operator: '%', value: 5, operationResult: 0 }
+                { displayResult: 'Buzz', operator: '%', value: 5, operationResult: 0 }
               ];
             })
             .add(() => {
-              console.log('done loading fizzBangRules');
-              this.calculateFizzBang();
+              console.log('done loading fizzBuzzRules');
+              this.calculateFizzBuzz();
               this.spinner.hide();
             }
           );
 
-    this.fizzBangResults = [];
+    this.fizzBuzzResults = [];
   }
 
-  calculateFizzBang() {
+  calculateFizzBuzz() {
     this.spinner.show();
-    this.fizzBangResults = [];
-    for (let i = this.fizzBangFloor; i <= this.fizzBangCeiling; i = i + this.fizzBangStep) {
+    this.fizzBuzzResults = [];
+    for (let i = this.fizzBuzzFloor; i <= this.fizzBuzzCeiling; i = i + this.fizzBuzzStep) {
       let displayValue = '';
-      this.fizzBangRules.forEach(rule => {
+      this.fizzBuzzRules.forEach(rule => {
         if (this.evaluateParameters(i, rule) === true) {
           displayValue += rule.displayResult;
         }
@@ -78,27 +78,30 @@ export class FizzBuzzGameComponent implements OnInit {
         displayValue = i.toString();
       }
 
-      let fizzBangResult: FizzBang;
-      fizzBangResult = {
+      let fizzBuzzResult: FizzBuzz;
+      fizzBuzzResult = {
         id: i,
         value: displayValue
       };
-      this.fizzBangResults.push(fizzBangResult);
+      this.fizzBuzzResults.push(fizzBuzzResult);
     }
-    this.fizzBangResultsEmitter.emit(this.fizzBangResults);
+    this.fizzBuzzResultsEmitter.emit(this.fizzBuzzResults);
     this.spinner.hide();
   }
 
-  evaluateParameters(parameter1: number, fizzBangRule: FizzBangRule) {
-    switch (fizzBangRule.operator) {
+  evaluateParameters(parameter1: number, fizzBuzzRule: FizzBuzzRule) {
+    switch (fizzBuzzRule.operator) {
       case '%': {
-        return parameter1 % fizzBangRule.value === fizzBangRule.operationResult;
+        return parameter1 % fizzBuzzRule.value === fizzBuzzRule.operationResult;
       }
       case '>': {
-        return parameter1 > fizzBangRule.value;
+        return parameter1 > fizzBuzzRule.value;
       }
       case '<': {
-        return parameter1 < fizzBangRule.value;
+        return parameter1 < fizzBuzzRule.value;
+      }
+      case '=': {
+        return parameter1 === fizzBuzzRule.value;
       }
       default: {
         break;
@@ -106,49 +109,41 @@ export class FizzBuzzGameComponent implements OnInit {
     }
   }
 
-  delete(rule: FizzBangRule) {
-    this.fizzBangRules.splice(this.fizzBangRules.indexOf(rule), 1);
-    this.calculateFizzBang();
+  delete(rule: FizzBuzzRule) {
+    this.fizzBuzzRules.splice(this.fizzBuzzRules.indexOf(rule), 1);
+    this.calculateFizzBuzz();
   }
 
-  save(rule: FizzBangRule) {
-    this.fizzBangRules.push(rule);
-    this.newFizzBangRule = {};
-    this.calculateFizzBang();
+  save(rule: FizzBuzzRule) {
+    this.fizzBuzzRules.push(rule);
+    this.newFizzBuzzRule = {};
+    this.calculateFizzBuzz();
     this.showNewRuleForm = !this.showNewRuleForm;
   }
 
   closeNewRuleForm() {
-    this.newFizzBangRule = {};
+    this.newFizzBuzzRule = {};
     this.showNewRuleForm = !this.showNewRuleForm;
   }
 
-  // Below 6 methods could probably be refactored into two
-  toggleFloorEditMode() {
-    this.floorEditMode = !this.floorEditMode;
-  }
+  toggleEditMode(element: string, reloadResults: boolean = false) {
+    switch (element) {
+      case 'floorEditMode': {
+        this.floorEditMode = !this.floorEditMode;
+        break;
+      }
+      case 'ceilingEditMode': {
+        this.ceilingEditMode = !this.ceilingEditMode;
+        break;
+      }
+      case 'stepperEditMode': {
+        this.stepperEditMode = !this.stepperEditMode;
+        break;
+      }
+    }
 
-  toggleCeilingEditMode() {
-    this.ceilingEditMode = !this.ceilingEditMode;
+    if (reloadResults === true) {
+      this.calculateFizzBuzz();
+    }
   }
-
-  toggleStepperEditMode() {
-    this.stepperEditMode = !this.stepperEditMode;
-  }
-
-  saveFloorEditChanges() {
-    this.calculateFizzBang();
-    this.floorEditMode = !this.floorEditMode;
-  }
-
-  saveCeilingEditChanges() {
-    this.calculateFizzBang();
-    this.ceilingEditMode = !this.ceilingEditMode;
-  }
-
-  saveStepperEditChanges() {
-    this.calculateFizzBang();
-    this.stepperEditMode = !this.stepperEditMode;
-  }
-  // Consider refactoring the above into two methods
 }

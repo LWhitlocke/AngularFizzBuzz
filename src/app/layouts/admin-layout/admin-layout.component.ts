@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/filter';
 import { Router } from '@angular/router';
-import { FizzBang } from 'app/models/fizzBang';
+import { FizzBuzz } from 'app/models/fizzBuzz';
 
 @Component({
   selector: 'app-admin-layout',
@@ -10,7 +10,7 @@ import { FizzBang } from 'app/models/fizzBang';
   styleUrls: ['./admin-layout.component.scss']
 })
 export class AdminLayoutComponent implements OnInit {
-  gameResults: FizzBang[];
+  gameResults: FizzBuzz[];
   gameName: string;
 
   showFizzBuzz: boolean;
@@ -20,7 +20,7 @@ export class AdminLayoutComponent implements OnInit {
   constructor(public location: Location, private router: Router) {}
 
   ngOnInit() {
-      this.gameName = 'FizzBang'
+      this.gameName = 'FizzBuzz'
       this.gameResults = [];
       this.showFizzBuzz = false;
       this.showFizzBuzzTwo = false;
@@ -32,7 +32,7 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   toggleFizzBuzz() {
-    this.gameName = 'FizzBang'
+    this.gameName = 'FizzBuzz'
     this.gameResults = [];
     this.showFizzBuzz = true;
     this.showFizzBuzzTwo = false;

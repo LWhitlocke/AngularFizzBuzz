@@ -20,7 +20,7 @@
         <button class="btn btn-success" (click)="toggleFizzBuzz()" *ngIf="!showFizzBuzz">Play FizzBuzz</button>
         <button class="btn btn-warning" (click)="toggleFizzBuzzTwo()" *ngIf="!showFizzBuzzTwo">Play Other game</button>
 
-        <app-fizz-buzz-game (fizzBangResultsEmitter)='handleResults($event)' *ngIf="showFizzBuzz"></app-fizz-buzz-game>
+        <app-fizz-buzz-game (fizzBuzzResultsEmitter)='handleResults($event)' *ngIf="showFizzBuzz"></app-fizz-buzz-game>
         <!--Results Table-->
         <div class="row" *ngIf="showTable">
           <div class="col-md-12">
@@ -36,14 +36,20 @@
                   <table class="table">
                     <thead class=" text-primary">
                       <th>
-                        Row
+                        Index
                       </th>
                       <th>
-                        Results
+                        Number
+                      </th>
+                      <th>
+                        Result
                       </th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let result of gameResults">
+                      <tr *ngFor="let result of gameResults; let i = index">
+                        <td>
+                          {{ i + 1 }}
+                        </td>
                         <td>
                           {{ result.id }}
                         </td>
