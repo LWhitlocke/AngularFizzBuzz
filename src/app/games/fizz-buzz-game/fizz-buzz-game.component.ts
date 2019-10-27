@@ -34,13 +34,14 @@ export class FizzBuzzGameComponent implements OnInit {
 
   ngOnInit() {
     this.newFizzBuzzRule = {};
+    this.floorEditMode = false;
+    this.ceilingEditMode = false;
+    this.stepperEditMode = false;
+
     this.availableOperators = ['%', '>', '<', '='];
     this.fizzBuzzFloor = 1;
     this.fizzBuzzCeiling = 100;
     this.fizzBuzzStep = 1;
-    this.floorEditMode = false;
-    this.ceilingEditMode = false;
-    this.stepperEditMode = false;
 
     this.spinner.show();
 

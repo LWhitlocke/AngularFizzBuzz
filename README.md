@@ -23,6 +23,8 @@ Optionally, you can also get the sibling project https://github.com/LWhitlocke/A
 - Add second sample game
 - Add ability to edit existing rules
 - Add ability to re-order rules
+- Return game base configuration from API
+- Fix UI freezing when generating large amounts of data
 
 ## Running the tests
 
